@@ -1,0 +1,3 @@
+O(n) Mejor caso posible (El array ya esta ordenado)
+O(n^2) Caso promedio (El array esta desordenado de forma aleatoria)
+O(n^2) Peor caso (El array esta desordenado de forma desendente, por ende, usara la mayor cantidad de intercambios posibles) 
