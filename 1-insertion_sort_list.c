@@ -11,24 +11,24 @@
 
 void swap_nodes(listint_t **list, listint_t *a, listint_t *b)
 {
-        /*Si a tiene un nodo antes lo conectamos a b*/
-        if (a->prev)
-                a->prev->next = b;
+	/*Si a tiene un nodo antes lo conectamos a b*/
+	if (a->prev)
+		a->prev->next = b;
 
-        /*Si era el primero, b se volvera el nuevo head*/
-        else
-                *list = b;
+	/*Si era el primero, b se volvera el nuevo head*/
+	else
+		*list = b;
 
-        /*Si b tiene un nodo despues, lo conectamos con a*/
-        if (b->next)
-                b->next->prev = a;
+	/*Si b tiene un nodo despues, lo conectamos con a*/
+	if (b->next)
+		b->next->prev = a;
 
-        /*Conectamos a y b*/
-        a->next = b->next;
-        b->prev = a->prev;
+	/*Conectamos a y b*/
+	a->next = b->next;
+	b->prev = a->prev;
 
-        a->prev = b;
-        b->next = a;
+	a->prev = b;
+	b->next = a;
 }
 
 /**
