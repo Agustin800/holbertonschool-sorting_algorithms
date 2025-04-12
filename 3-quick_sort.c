@@ -22,8 +22,7 @@ void swap(int *a, int *b)
 void quick_sort(int *array, size_t length)
 {
 	size_t i, j, l_stack[1024], r_stack[1024], top = 0;
-	int pivot, *start;
-	size_t left, right;
+	size_t left, right, pivot;
 
 	if (length < 2 || !array)
 		return;
@@ -36,29 +35,30 @@ void quick_sort(int *array, size_t length)
 		left = l_stack[top];
 		if (right - left < 2)
 			continue;
-		start = array + left;
-		pivot = start[right - left - 1];
-		j = 0;
-		for (i = 0; i < right - left - 1; i++)
+		pivot = array[right - 1];
+		for (i = left, j = left; j < right - 1; j++)
 		{
-			if (start[i] <= pivot)
+			if (array[j] <= (int)pivot)
 			{
 				if (i != j)
-					swap(&start[i], &start[j]);
-				j++;
+				{
+					swap(&array[i], &array[j]);
+					print_array(array, length);
+				}
+				i++;
 			}
 		}
-		swap(&start[right - left - 1], &start[j]);
-		print_array(array, length);
-		if (j > 0)
+		if (i != right - 1)
+		{
+			swap(&array[i], &array[right - 1]);
+			print_array(array, length);
+		}
+		if (i > left)
 		{
 			l_stack[top] = left;
-			r_stack[top++] = left + j;
+			r_stack[top++] = i;
 		}
-		if (right - left - j - 1 > 0)
-		{
-			l_stack[top] = left + j + 1;
-			r_stack[top++] = right;
-		}
+		l_stack[top] = i + 1;
+		r_stack[top++] = right;
 	}
 }
