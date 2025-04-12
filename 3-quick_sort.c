@@ -1,6 +1,17 @@
 #include <stdlib.h>
 #include "sort.h"
 /**
+ * swap - swaps two integers
+ * @a: first integer
+ * @b: second integer
+ */
+void swap(int *a, int *b)
+{
+	int temp = *a;
+	*a = *b;
+	*b = temp;
+}
+/**
  * quick_sort - sorts an array of integers in ascending order using the
  *	quick sort algorithm.
  * @array: the array to be sorted.
@@ -10,26 +21,44 @@
  */
 void quick_sort(int *array, size_t length)
 {
-	int pivot = 0, j = 0, i = 0, temp = 0;
+	size_t i, j, l_stack[1024], r_stack[1024], top = 0;
+	int pivot, *start;
+	size_t left, right;
 
-	if (length < 2)
+	if (length < 2 || !array)
 		return;
-	pivot = array[length - 1];
-	j = 0;
-	for (i = 0; i < (int)length - 1; i++)
+	l_stack[0] = 0;
+	r_stack[0] = length;
+	top = 1;
+	while (top > 0)
 	{
-		if (array[i] <= pivot)
+		right = r_stack[--top];
+		left = l_stack[top];
+		if (right - left < 2)
+			continue;
+		start = array + left;
+		pivot = start[right - left - 1];
+		j = 0;
+		for (i = 0; i < right - left - 1; i++)
 		{
-			temp = array[i];
-			array[i] = array[j];
-			array[j] = temp;
-			j++;
+			if (start[i] <= pivot)
+			{
+				if (i != j)
+					swap(&start[i], &start[j]);
+				j++;
+			}
+		}
+		swap(&start[right - left - 1], &start[j]);
+		print_array(array, length);
+		if (j > 0)
+		{
+			l_stack[top] = left;
+			r_stack[top++] = left + j;
+		}
+		if (right - left - j - 1 > 0)
+		{
+			l_stack[top] = left + j + 1;
+			r_stack[top++] = right;
 		}
 	}
-	temp = array[length - 1];
-	array[length - 1] = array[j];
-	array[j] = temp;
-	print_array(array, length);
-	quick_sort(array, j); /* sorts left vector */
-	quick_sort(array + j + 1, length - j - 1); /* sorts right vector */
 }
