@@ -29,6 +29,7 @@ void quick_sort(int *array, size_t length)
 	temp = array[length - 1];
 	array[length - 1] = array[j];
 	array[j] = temp;
+	print_array(array, length);
 	quick_sort(array, j); /* sorts left vector */
 	quick_sort(array + j + 1, length - j - 1); /* sorts right vector */
 }
